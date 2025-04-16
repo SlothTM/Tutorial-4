@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    private void Awake(
+    private void Awake()
     {
         if (instance == null)
         {
@@ -15,11 +15,11 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        
+        }
     }
 
     public void RestartGame()
     {
-        SceneManager.LoadScene("IncorrectName"); // Use the exact name of your scene
+        SceneManager.LoadScene("SimplePipeGame"); // Use the exact name of your scene
     }
 }

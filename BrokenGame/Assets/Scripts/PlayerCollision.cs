@@ -4,10 +4,11 @@ using System.Collections;
 
 public class PlayerCollision : MonoBehaviour
 {
-    public GameObject gameOverScreen; // Assign your game over screen UI in the Inspector
-    public float shrinkDuration = 0.5f; // Duration of shrinking effect
-    public float destroyDelay = 1f; // Delay before destroying the player
-    private bool gameIsOver = false;
+    public GameObject gameOverScreen; 
+    public float shrinkDuration = 0.5f; 
+    public float destroyDelay = 1f; 
+
+    [SerializeField] private bool gameIsOver = false; 
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -20,13 +21,9 @@ public class PlayerCollision : MonoBehaviour
 
     private IEnumerator HandlePlayerDeath()
     {
-        // Stop any movement or actions by disabling the Rigidbody2D
+
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null) rb.velocity = Vector2.zero;
-
-        // Immediate game over without waiting
-        gameOverScreen.SetActive(false); // Change this to a non-existent GameObject
-        yield return null;
 
         // Shrink the player over time
         Vector3 originalScale = transform.localScale;
@@ -38,22 +35,18 @@ public class PlayerCollision : MonoBehaviour
             yield return null;
         }
 
-        // Destroy the player immediately without waiting
-        Destroy(gameObject);
-
-        // Show game over screen and stop score
+ 
+        gameOverScreen.SetActive(true);
         FindObjectOfType<ScoreManager>().StopScore();
 
-        // Wait before resetting (optional, can remove this)
-        yield return new WaitForSeconds(2f);
+ 
+        yield return new WaitForSeconds(4f);
 
-        // Restart the game
-        RestartGame();
+        GameManager.instance.RestartGame();
+
+        // Destroy the player after shrinking
+        Destroy(gameObject, destroyDelay);
+
     }
 
-    private void RestartGame()
-    {
-        // Attempt to restart the game but skip the logic
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
+}

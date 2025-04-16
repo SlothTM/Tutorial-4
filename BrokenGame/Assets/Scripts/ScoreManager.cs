@@ -12,7 +12,7 @@ public class ScoreManager : MonoBehaviour
         if (gameIsActive)
         {
             // Score remains fixed (e.g., score = 10)
-            score = 10; // Fixed score value for testing
+            score = (int)(Time.timeSinceLevelLoad); // Fixed score value for testing
             scoreText.text = "Score: " + score.ToString();
         }
     }
@@ -20,6 +20,6 @@ public class ScoreManager : MonoBehaviour
     public void StopScore()
     {
         gameIsActive = false;
-        scoreText.text = "Westminster: " + score.ToString(); // Keep showing the last score
+        scoreText.text = "Score: " + score.ToString(); // Keep showing the last score
     }
 }
